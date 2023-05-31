@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="utf-8">
-  <title>Book Page</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700" rel="stylesheet">
+  <title>My Book Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<main>
+<body>
+  <main>
     <h1>My Book Page</h1>
-
+  
     <div class="search-bar">
-      <input type="text" placeholder="Search...">
+      <input type="text" id="search-input" placeholder="Search...">
       <button onclick="searchBooks()">Search</button>
     </div>
-
-    <div class="book-list">
-      <ul id="book-list"></ul>
+  
+    <div class="container">
+      <div class="row" id="book-list"></div>
     </div>
-
+  
     <div class="button-container">
-      <button>Advance Page</button>
-      <button>Pass Page</button>
+      <button id="previous-button" onclick="previousPage()" disabled>⇐</button>
+      <button id="next-button" onclick="nextPage()" disabled>⇒</button>
     </div>
-</main>
-<script src="script.js"></script>
+  
+    <div id="loading-screen">
+      <p id="loading-text">Loading...</p>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
 </html>
+
