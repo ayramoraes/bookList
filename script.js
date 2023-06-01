@@ -1,4 +1,3 @@
-// script.js
 let searchTerm = '';
 let pageOffset = 0;
 const limitPerPage = 12;
@@ -13,32 +12,23 @@ function searchBooks() {
   }
   pageOffset = 0;
 
-  // Show loading screen
-  const loadingScreen = document.getElementById('loading-screen');
-  loadingScreen.style.display = 'block';
-
   fetchBooks();
 }
 
 function fetchBooks() {
-  // Show loading screen
   const loadingScreen = document.getElementById('loading-screen');
   loadingScreen.style.display = 'block';
-
   const apiUrl = `https://openlibrary.org/search.json?q=${searchTerm}&limit=${limitPerPage}&offset=${pageOffset}`;
-
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
       totalResults = data.numFound;
       displayBooks(data.docs);
-
-      // Hide loading screen after displaying the books
-      loadingScreen.style.display = 'none';
     })
     .catch(error => {
       console.log(error);
-      // Hide loading screen in case of error
+    })
+    .finally(() => {
       loadingScreen.style.display = 'none';
     });
 }
@@ -54,6 +44,7 @@ function nextPage() {
   pageOffset += limitPerPage;
   fetchBooks();
 }
+
 
 function displayBooks(books) {
   const bookList = document.getElementById('book-list');
@@ -127,7 +118,6 @@ function displayBooks(books) {
   const totalPages = Math.ceil(totalResults / limitPerPage);
   const currentPage = Math.floor(pageOffset / limitPerPage) + 1;
 
-  // Add pagination information
   const paginationInfo = document.createElement('p');
   paginationInfo.innerText = `Page ${currentPage} of ${totalPages}`;
   bookList.appendChild(paginationInfo);
