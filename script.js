@@ -119,8 +119,10 @@ function displayBooks(books) {
   const currentPage = Math.floor(pageOffset / limitPerPage) + 1;
 
   const paginationInfo = document.createElement('p');
-  paginationInfo.innerText = `Page ${currentPage} of ${totalPages}`;
-  bookList.appendChild(paginationInfo);
+paginationInfo.innerText = `Page ${currentPage} of ${totalPages}`;
+paginationInfo.className = 'pagination-info'; 
+
+bookList.appendChild(paginationInfo);
 
   const previousButton = document.getElementById('previous-button');
   previousButton.disabled = pageOffset === 0; // Disable on first page
