@@ -51,7 +51,10 @@ function displayBooks(books) {
   bookList.innerHTML = '';
 
   if (books.length === 0) {
-    bookList.innerHTML = '<p>No books found.</p>';
+    const noBooksText = document.createElement('p');
+    noBooksText.className = 'no-books-found';
+    noBooksText.innerText = 'No books found 😢';
+    bookList.appendChild(noBooksText);
     const previousButton = document.getElementById('previous-button');
     previousButton.disabled = true;
     const nextButton = document.getElementById('next-button');
@@ -95,17 +98,14 @@ function displayBooks(books) {
     title.className = 'card-title';
     title.innerText = book.title;
 
-    const description = document.createElement('p');
-    description.className = 'card-text';
-    description.innerText = book.description || 'No description available.';
-
-    const lastUpdated = document.createElement('p');
-    lastUpdated.className = 'card-text';
-    lastUpdated.innerHTML = `<small class="text-muted">Last updated: ${book.lastUpdated}</small>`;
+    const authorNames = book.author_name || ['Author\'s name not available'];
+    const authors = document.createElement('p');
+    authors.classList.add('card-text');
+    authors.innerText = 'Author(s): ' + authorNames.join(', ');
+    
 
     cardBody.appendChild(title);
-    cardBody.appendChild(description);
-    cardBody.appendChild(lastUpdated);
+    cardBody.appendChild(authors);
 
     colContent.appendChild(cardBody);
     row.appendChild(colContent);
