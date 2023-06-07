@@ -124,8 +124,9 @@ function createCardElement(book) {
   titleElement.style.display = '-webkit-box';
   titleElement.style.webkitBoxOrient = 'vertical';
   titleElement.style.webkitLineClamp = '3';
-  
-  const authorsElement = createElement('p', 'card-text', 'Author(s): ' + getFullNames(author_name).join(', '));
+
+  const firstAuthorName = getFirstAuthorName(author_name);
+  const authorsElement = createElement('p', 'card-text', 'Author(s): ' + firstAuthorName);
   cardBody.appendChild(titleElement);
   cardBody.appendChild(authorsElement);
 
@@ -138,9 +139,17 @@ function createCardElement(book) {
   return col;
 }
 
+function getFirstAuthorName(authors) {
+  if (!authors || authors.length === 0) {
+    return 'Author\'s name not available';
+  }
+
+  return authors[0];
+}
+
 function limitTitleLines(title) {
   const maxTitleLines = 3;
-  const maxTitleLength = 50; // Maximum number of characters per line
+  const maxTitleLength = 50;
 
   if (title.length > maxTitleLength * maxTitleLines) {
     title = title.substring(0, maxTitleLength * maxTitleLines) + '...';
@@ -149,14 +158,6 @@ function limitTitleLines(title) {
   return title;
 }
 
-
-function getFullNames(authors) {
-  if (!authors) {
-    return ['Author\'s name not available'];
-  }
-
-  return authors.map(author => author.trim());
-}
 
 
 function createElement(tagName, className, text) {
