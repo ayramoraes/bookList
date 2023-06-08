@@ -106,10 +106,11 @@ function displayBooks(books) {
 }
 
 function createCardElement(book) {
-  const { title, author_name, cover_i } = book;
+  const { title, author_name, cover_i, key } = book;
 
   const col = createElement('div', 'col-md-4');
   const card = createElement('div', 'card mb-3');
+
   const row = createElement('div', 'row g-0');
   const colImage = createElement('div', 'col-md-4');
   const colContent = createElement('div', 'col-md-8');
@@ -118,7 +119,12 @@ function createCardElement(book) {
   const coverImage = createImageElement(cover_i, title);
   colImage.appendChild(coverImage);
 
-  const titleElement = createElement('h5', 'card-title', limitTitleLines(title));
+  const link = createElement('a');
+  link.href = `https://openlibrary.org${key}`;
+  link.target = '_blank'; // Open link in a new tab
+
+  const titleElement = createElement('h5', 'card-title');
+  titleElement.textContent = limitTitleLines(title);
   titleElement.style.overflow = 'hidden';
   titleElement.style.textOverflow = 'ellipsis';
   titleElement.style.display = '-webkit-box';
@@ -126,7 +132,9 @@ function createCardElement(book) {
   titleElement.style.webkitLineClamp = '3';
 
   const firstAuthorName = getFirstAuthorName(author_name);
-  const authorsElement = createElement('p', 'card-text', 'Author(s): ' + firstAuthorName);
+  const authorsElement = createElement('p', 'card-text');
+  authorsElement.textContent = 'Author(s): ' + firstAuthorName;
+ 
   cardBody.appendChild(titleElement);
   cardBody.appendChild(authorsElement);
 
@@ -134,10 +142,18 @@ function createCardElement(book) {
   row.appendChild(colImage);
   row.appendChild(colContent);
   card.appendChild(row);
-  col.appendChild(card);
+  link.appendChild(card);
+  col.appendChild(link);
 
   return col;
 }
+
+
+
+
+
+
+
 
 function getFirstAuthorName(authors) {
   if (!authors || authors.length === 0) {
@@ -157,8 +173,6 @@ function limitTitleLines(title) {
 
   return title;
 }
-
-
 
 function createElement(tagName, className, text) {
   const element = document.createElement(tagName);
@@ -184,7 +198,6 @@ function createImageElement(coverId, altText) {
   img.className = 'card-img';
   return img;
 }
-
 
 searchInput.addEventListener('keydown', event => {
   if (event.key === 'Enter') {
