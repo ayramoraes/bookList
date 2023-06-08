@@ -148,13 +148,6 @@ function createCardElement(book) {
   return col;
 }
 
-
-
-
-
-
-
-
 function getFirstAuthorName(authors) {
   if (!authors || authors.length === 0) {
     return 'Author\'s name not available';
@@ -205,3 +198,4 @@ searchInput.addEventListener('keydown', event => {
     searchBooks();
   }
 });
+
