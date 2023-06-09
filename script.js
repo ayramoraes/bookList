@@ -44,12 +44,14 @@ function previousPage() {
   if (pageOffset >= limitPerPage) {
     pageOffset -= limitPerPage;
     fetchBooks();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
 function nextPage() {
   pageOffset += limitPerPage;
   fetchBooks();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function displayBooks(books) {
