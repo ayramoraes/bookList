@@ -11,6 +11,8 @@ const nextButton = document.getElementById('next-button');
 const paginationInfo = document.createElement('p');
 paginationInfo.className = 'pagination-info';
 
+hideButtons();
+
 function searchBooks() {
   searchTerm = searchInput.value.trim();
   if (searchTerm === '') {
@@ -42,12 +44,14 @@ function previousPage() {
   if (pageOffset >= limitPerPage) {
     pageOffset -= limitPerPage;
     fetchBooks();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
 function nextPage() {
   pageOffset += limitPerPage;
   fetchBooks();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function displayBooks(books) {
@@ -58,9 +62,8 @@ function displayBooks(books) {
     noBooksText.className = 'no-books-found';
     noBooksText.innerText = 'No books found 😢';
     bookList.appendChild(noBooksText);
-    previousButton.disabled = true;
-    nextButton.disabled = true;
     paginationInfo.innerText = '';
+    hideButtons();
     return;
   }
 
@@ -100,10 +103,22 @@ function displayBooks(books) {
     nextButton.onclick = nextPage;
   } else {
     paginationInfo.innerText = '';
-    previousButton.disabled = true;
-    nextButton.disabled = true;
+    hideButtons();
   }
+
+  showButtons();
 }
+
+function hideButtons() {
+  previousButton.style.display = 'none';
+  nextButton.style.display = 'none';
+}
+
+function showButtons() {
+  previousButton.style.display = 'inline-block';
+  nextButton.style.display = 'inline-block';
+}
+
 
 function createCardElement(book) {
   const { title, author_name, cover_i, key } = book;
@@ -147,6 +162,7 @@ function createCardElement(book) {
 
   return col;
 }
+
 
 function getFirstAuthorName(authors) {
   if (!authors || authors.length === 0) {
